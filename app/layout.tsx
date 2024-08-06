@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={GeistSans.className}>
       <body>
-        <main className="min-h-screen flex flex-col items-center">{children}</main>
+        <main className="max-w-6xl mx-auto px-4">{children}</main>
       </body>
     </html>
   )

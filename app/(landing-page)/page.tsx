@@ -1,13 +1,12 @@
 'use client'
-import { createClient } from '@/utils/supabase/client'
+
+import LandingPageHeader from './header'
 
 const LandingPage = () => {
-  const supabase = createClient()
-
   return (
-    <main>
-      <button onClick={async () => await supabase.auth.signOut()}>sign out</button>
-    </main>
+    <>
+      <LandingPageHeader />
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-const Header = () => {
+const Header = async () => {
   return <header>header</header>
 }
 

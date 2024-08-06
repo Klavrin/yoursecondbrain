@@ -1,19 +1,48 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar'
+import { Button } from '@nextui-org/button'
 
 const LandingPageHeader = () => {
   return (
-    <header className="bg-slate-700 rounded-lg mt-4 p-2">
-      <Link href="/">
+    <Navbar>
+      <NavbarBrand>
         <Image
-          alt="icon"
-          src="./icon.svg"
-          className="btn bg-transparent border-none hover:bg-slate-800 p-0"
-          width={50}
-          height={50}
+          alt="yoursecondbrain logo"
+          src="/yoursecondbrain-logo-dark.svg"
+          width={40}
+          height={40}
         />
-      </Link>
-    </header>
+        <p className="font-bold text-inherit">yoursecondbrain</p>
+      </NavbarBrand>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Features
+          </Link>
+        </NavbarItem>
+        <NavbarItem isActive>
+          <Link href="#" aria-current="page">
+            Customers
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link color="foreground" href="#">
+            Pricing
+          </Link>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem className="hidden lg:flex">
+          <Link href="#">Login</Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Button as={Link} color="primary" href="#" variant="flat">
+            Sign Up
+          </Button>
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar>
   )
 }
 

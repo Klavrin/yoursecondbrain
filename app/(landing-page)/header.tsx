@@ -5,23 +5,25 @@ import { Button } from '@nextui-org/button'
 
 const LandingPageHeader = () => {
   return (
-    <Navbar>
-      <NavbarBrand>
+    <Navbar className="bg-transparent">
+      <NavbarBrand as={Link} href="#" className="group">
         <Image
           alt="yoursecondbrain logo"
           src="/yoursecondbrain-logo-dark.svg"
           width={40}
           height={40}
+          className="group-hover:-rotate-12 transition-all"
         />
         <p className="font-bold text-inherit">yoursecondbrain</p>
       </NavbarBrand>
+
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
+        <NavbarItem>
           <Link href="#" aria-current="page">
             Customers
           </Link>
@@ -32,12 +34,20 @@ const LandingPageHeader = () => {
           </Link>
         </NavbarItem>
       </NavbarContent>
+
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Button as={Link} href="#" variant="light">
+            Login
+          </Button>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button
+            as={Link}
+            href="#"
+            variant="flat"
+            className="bg-neutral-800 text-neutral-200"
+          >
             Sign Up
           </Button>
         </NavbarItem>

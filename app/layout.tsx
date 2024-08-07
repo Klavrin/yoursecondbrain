@@ -7,8 +7,9 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase'
+  title: 'yoursecondbrain - The productivity system you have been searching for.',
+  description:
+    'The productivity system you have been searching for. Frustrated with productivity tools that fall short? Unlock your full potential with yoursecondbrain. Transform scattered thoughts into a powerful knowledge base. Organize your ideas, research, and inspire others effortlessly.'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

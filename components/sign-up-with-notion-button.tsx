@@ -2,15 +2,15 @@
 
 import { createClient } from '@/utils/supabase/client'
 import { ReactNode } from 'react'
-import { FaGoogle } from 'react-icons/fa6'
+import { RiNotionFill } from 'react-icons/ri'
 import { twMerge } from 'tailwind-merge'
 
-interface SignUpWithGoogleButtonProps {
+interface SignUpWithNotionButtonProps {
   children: ReactNode
   className?: string
 }
 
-const SignUpWithGoogleButton: React.FC<SignUpWithGoogleButtonProps> = ({
+const SignUpWithNotionButton: React.FC<SignUpWithNotionButtonProps> = ({
   children,
   className
 }) => {
@@ -18,7 +18,7 @@ const SignUpWithGoogleButton: React.FC<SignUpWithGoogleButtonProps> = ({
 
   const handleGoogleLogIn = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'google',
+      provider: 'notion',
       options: {
         redirectTo: 'http://localhost:3000/auth/callback'
       }
@@ -29,14 +29,14 @@ const SignUpWithGoogleButton: React.FC<SignUpWithGoogleButtonProps> = ({
     <button
       onClick={handleGoogleLogIn}
       className={twMerge(
-        'max-w-full flex justify-center items-center gap-2 border border-neutral-300 hover:border-neutral-500 bg-none hover:bg-neutral-200 transition-colors rounded-md px-2 py-2',
+        'flex justify-center items-center gap-2 border border-neutral-300 hover:border-neutral-500 bg-none hover:bg-neutral-200 transition-colors rounded-md px-2 py-2',
         className
       )}
     >
-      <FaGoogle className="text-neutral-400" />
+      <RiNotionFill className="text-neutral-400" size={20} />
       {children}
     </button>
   )
 }
 
-export default SignUpWithGoogleButton
+export default SignUpWithNotionButton

@@ -37,14 +37,14 @@ const LandingPageHeader = () => {
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Button as={Link} href="#" variant="light">
+          <Button as={Link} href="/log-in" variant="light">
             Login
           </Button>
         </NavbarItem>
         <NavbarItem>
           <Button
             as={Link}
-            href="#"
+            href="/sign-up"
             variant="flat"
             className="bg-neutral-800 text-neutral-200"
           >

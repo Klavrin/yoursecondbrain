@@ -1,7 +1,7 @@
 'use client'
 
-import HeroSection from '@/components/sections/hero-section'
 import LandingPageHeader from './header'
+import HeroSection from '@/components/sections/hero-section'
 
 const LandingPage = () => {
   return (

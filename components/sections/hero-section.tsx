@@ -33,7 +33,7 @@ const HeroSection = () => {
             />
             <h5
               className={
-                'lg:text-base text-[1.5vw] tracking-normal relative -right-2 top-1 -rotate-3 select-none' +
+                'lg:text-base text-[1.5vw] tracking-normal relative -right-2 top-1 -rotate-3 select-none ' +
                 indieFlower.className
               }
             >

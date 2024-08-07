@@ -1,5 +1,11 @@
+'use client'
+
+import { createClient } from '@/utils/supabase/client'
+
 const Header = async () => {
-  return <header>header</header>
+  const supabase = createClient()
+
+  return <header onClick={async () => await supabase.auth.signOut()}>header</header>
 }
 
 export default Header

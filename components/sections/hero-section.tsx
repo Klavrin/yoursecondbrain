@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Indie_Flower } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import { Button } from '@nextui-org/button'
+import { FaArrowRightLong } from 'react-icons/fa6'
 
 const indieFlower = Indie_Flower({
   weight: '400',
@@ -59,8 +60,8 @@ const HeroSection = () => {
         Organize your ideas, research, and inspire others effortlessly.
       </p>
 
-      <Button className="sm:w-64 w-auto sm:h-10 h-8 bg-neutral-800 text-neutral-200 sm:text-lg text-sm">
-        Upgrade your brain --&gt;
+      <Button className="sm:w-64 w-auto sm:h-10 h-8 bg-neutral-800 text-neutral-200 sm:text-lg text-sm flex">
+        Upgrade your brain <FaArrowRightLong />
       </Button>
     </div>
   )

@@ -3,19 +3,12 @@ import Link from 'next/link'
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 import { Button } from '@nextui-org/button'
 
+import AppLogo from '@/components/app-logo'
+
 const LandingPageHeader = () => {
   return (
     <Navbar className="bg-transparent">
-      <NavbarBrand as={Link} href="#" className="group">
-        <Image
-          alt="yoursecondbrain logo"
-          src="/yoursecondbrain-logo-dark.svg"
-          width={40}
-          height={40}
-          className="group-hover:-rotate-12 transition-all"
-        />
-        <p className="font-bold text-inherit">yoursecondbrain</p>
-      </NavbarBrand>
+      <AppLogo href="/" />
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>

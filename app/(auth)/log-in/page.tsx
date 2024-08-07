@@ -1,32 +1,32 @@
-'use client'
+import SignUpWithGoogleButton from '@/components/sign-up-with-google-button'
+import { Navbar } from '@nextui-org/navbar'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { createClient } from '@/utils/supabase/client'
+import AppLogo from '@/components/app-logo'
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : 'http://localhost:3000'
 
-// export const metadata = {
-//   metadataBase: new URL(defaultUrl),
-//   title: 'yoursecondbrain - Log in',
-//   description: 'Log in yoursecondbrain.'
-// }
+export const metadata = {
+  metadataBase: new URL(defaultUrl),
+  title: 'yoursecondbrain - Log in',
+  description: 'Log in yoursecondbrain.'
+}
 
-const LogInPage = () => {
-  const supabase = createClient()
+// #f8f8f8
 
-  const handleGoogleLogIn = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: 'http://localhost:3000/auth/callback'
-      }
-    })
-  }
-
+const LogInPage = async () => {
   return (
-    <div>
-      <button onClick={handleGoogleLogIn}>log in with google</button>
+    <div className="flex h-screen">
+      <div className="w-2/5 bg-neutral-100 border-r-1 border-neutral-300">
+        <Navbar className="bg-transparent">
+          <AppLogo href="/" />
+        </Navbar>
+      </div>
+
+      <div className="w-3/5"></div>
     </div>
   )
 }

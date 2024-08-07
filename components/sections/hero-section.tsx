@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Indie_Flower } from 'next/font/google'
+import { GeistSans } from 'geist/font/sans'
 import { Button } from '@nextui-org/button'
 
 const indieFlower = Indie_Flower({
@@ -20,7 +21,12 @@ const HeroSection = () => {
         Check out our newest generous plan!
       </div>
 
-      <h1 className="sm:w-auto w-[90%] lg:text-6xl sm:text-[5.75vw] text-2xl max-w-4xl leading-none font-bold tracking-tight sm:text-center text-start relative">
+      <h1
+        className={
+          'sm:w-auto w-[90%] lg:text-6xl sm:text-[5.75vw] text-2xl max-w-4xl leading-none font-bold tracking-tight sm:text-center text-start relative ' +
+          GeistSans.className
+        }
+      >
         The{' '}
         <span className="relative whitespace-nowrap">
           <div className="absolute lg:-right-48 right-[-17vw] lg:-top-14 top-[-4.5vw] opacity-45 sm:flex hidden">

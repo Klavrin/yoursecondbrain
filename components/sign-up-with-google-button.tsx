@@ -5,9 +5,13 @@ import { ReactNode } from 'react'
 
 interface SignUpWithGoogleProps {
   children: ReactNode
+  className?: string
 }
 
-const SignUpWithGoogleButton: React.FC<SignUpWithGoogleProps> = ({ children }) => {
+const SignUpWithGoogleButton: React.FC<SignUpWithGoogleProps> = ({
+  children,
+  className
+}) => {
   const supabase = createClient()
 
   const handleGoogleLogIn = async () => {
@@ -19,7 +23,11 @@ const SignUpWithGoogleButton: React.FC<SignUpWithGoogleProps> = ({ children }) =
     })
   }
 
-  return <button onClick={handleGoogleLogIn}>{children}</button>
+  return (
+    <button onClick={handleGoogleLogIn} className={className}>
+      {children}
+    </button>
+  )
 }
 
 export default SignUpWithGoogleButton

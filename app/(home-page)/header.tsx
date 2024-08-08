@@ -9,10 +9,12 @@ import {
   useDisclosure
 } from '@nextui-org/modal'
 import { Button } from '@nextui-org/button'
+import { Kbd } from '@nextui-org/kbd'
 
 import { useUserStore } from '@/store/user-store'
 import { redirect } from 'next/navigation'
 import Avatar from '../../components/avatar'
+import { IoSearch } from 'react-icons/io5'
 
 const Header = () => {
   const user = useUserStore((state) => state.user)
@@ -31,7 +33,14 @@ const Header = () => {
 
   return (
     <>
-      <header className="w-full h-12 flex items-center px-4">
+      <header className="w-full h-12 flex items-center justify-between px-4">
+        <Button className="text-normal-800 w-64 flex justify-between">
+          <div className="flex gap-1">
+            <IoSearch size={20} />
+            Quick search...
+          </div>
+          <Kbd keys={['command']}>K</Kbd>
+        </Button>
         <Avatar onOpen={onOpen} />
       </header>
 

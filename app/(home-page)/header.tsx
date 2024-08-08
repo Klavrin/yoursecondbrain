@@ -1,6 +1,10 @@
 'use client'
 
 import { createClient } from '@/utils/supabase/client'
+import { useUserStore } from '@/store/user-store'
+import { redirect } from 'next/navigation'
+import { IoSearch } from 'react-icons/io5'
+
 import {
   Modal,
   ModalContent,
@@ -10,11 +14,8 @@ import {
 } from '@nextui-org/modal'
 import { Button } from '@nextui-org/button'
 import { Kbd } from '@nextui-org/kbd'
-
-import { useUserStore } from '@/store/user-store'
-import { redirect } from 'next/navigation'
 import Avatar from '../../components/avatar'
-import { IoSearch } from 'react-icons/io5'
+import UserStreak from '@/components/user-streak'
 
 const Header = () => {
   const user = useUserStore((state) => state.user)
@@ -41,7 +42,11 @@ const Header = () => {
           </div>
           <Kbd keys={['command']}>K</Kbd>
         </Button>
-        <Avatar onOpen={onOpen} />
+
+        <div className="flex gap-6">
+          <UserStreak days={1} />
+          <Avatar onOpen={onOpen} />
+        </div>
       </header>
 
       <Modal

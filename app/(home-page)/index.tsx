@@ -32,7 +32,9 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div>{user?.id}</div>
+      <div className="flex justify-center">
+        <h3 className="text-2xl pt-5 font-bold">Hello, {user?.user_metadata.name}</h3>
+      </div>
     </>
   )
 }

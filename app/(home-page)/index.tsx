@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useUserStore } from '@/store/user-store'
 
-import Header from '@/components/header'
+import Header from '@/app/(home-page)/header'
 import Loading from '@/components/loading'
 
 const Home = () => {

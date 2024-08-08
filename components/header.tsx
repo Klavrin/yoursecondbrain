@@ -36,11 +36,7 @@ const Header = () => {
           <DropdownItem key="settings">Settings</DropdownItem>
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
           <DropdownItem key="plugins">Plugins</DropdownItem>
-          <DropdownItem
-            key="logout"
-            color="danger"
-            onClick={async () => await supabase.auth.signOut()}
-          >
+          <DropdownItem key="logout" color="danger" closeOnSelect={false}>
             Log Out
           </DropdownItem>
         </DropdownMenu>

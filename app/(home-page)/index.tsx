@@ -6,6 +6,7 @@ import { useUserStore } from '@/store/user-store'
 
 import Header from '@/app/(home-page)/header'
 import Loading from '@/components/loading'
+import Sidebar from '@/components/sidebar'
 
 const Home = () => {
   const [loading, setLoading] = useState(true)
@@ -30,12 +31,15 @@ const Home = () => {
   if (loading) return <Loading />
 
   return (
-    <>
-      <Header />
-      <div className="flex justify-center">
-        <h3 className="text-2xl pt-5 font-bold">Hello, {user?.user_metadata.name}</h3>
+    <div className="flex">
+      <Sidebar />
+      <div className="w-full">
+        <Header />
+        <div className="flex justify-center">
+          <h3 className="text-2xl pt-5 font-bold">Hello, {user?.user_metadata.name}</h3>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 

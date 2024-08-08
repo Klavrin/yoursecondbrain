@@ -15,6 +15,7 @@ import {
 } from '@nextui-org/modal'
 import { Button } from '@nextui-org/button'
 import { Kbd } from '@nextui-org/kbd'
+import { Tabs, Tab } from '@nextui-org/tabs'
 import Avatar from '../../components/avatar'
 import UserStreak from '@/components/user-streak'
 import { Tooltip } from '@nextui-org/tooltip'
@@ -42,7 +43,14 @@ const Header = () => {
       <header className="w-full h-14 flex items-center justify-between px-4">
         <div className="flex gap-2 items-center">
           {!sidebarOpened && (
-            <Tooltip showArrow content="Open sidebar" size="sm" placement="bottom-start">
+            <Tooltip
+              showArrow
+              content="Open sidebar"
+              size="sm"
+              placement="bottom-start"
+              delay={400}
+              closeDelay={150}
+            >
               <Button
                 size="sm"
                 variant="light"
@@ -54,13 +62,22 @@ const Header = () => {
             </Tooltip>
           )}
 
-          <Button className="text-normal-800 w-64 flex justify-between bg-neutral-100 border-1">
+          <Button className="text-normal-800 w-64 flex justify-between bg-neutral-100 border-1 text-neutral-500">
             <div className="flex gap-1">
               <IoSearch size={20} />
               Quick search...
             </div>
             <Kbd keys={['command']}>K</Kbd>
           </Button>
+
+          <div className="flex flex-wrap gap-4">
+            <Tooltip content="Feed options" delay={400} closeDelay={200} showArrow>
+              <Tabs aria-label="Tabs radius">
+                <Tab key="for-you" title="For you" />
+                <Tab key="following" title="Following" />
+              </Tabs>
+            </Tooltip>
+          </div>
         </div>
 
         <div className="flex gap-6">

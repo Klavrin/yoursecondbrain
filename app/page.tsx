@@ -6,7 +6,7 @@ const Home = async () => {
   const supabase = createClient()
   const { data } = await supabase.auth.getUser()
 
-  console.log(data)
+  // console.log('user', data)
 
   if (!data.user) return <LandingPage />
   return <Dashboard />

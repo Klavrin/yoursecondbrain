@@ -1,10 +1,10 @@
 import Header from '@/components/header'
 
-const Dashboard = () => {
+const Dashboard = async () => {
   return (
     <>
       <Header />
-      <div>dashboard</div>
+      <div>hello</div>
     </>
   )
 }

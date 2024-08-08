@@ -16,7 +16,7 @@ const SignUpWithNotionButton: React.FC<SignUpWithNotionButtonProps> = ({
 }) => {
   const supabase = createClient()
 
-  const handleGoogleLogIn = async () => {
+  const handleNotionLogIn = async () => {
     await supabase.auth.signInWithOAuth({
       provider: 'notion',
       options: {
@@ -27,7 +27,7 @@ const SignUpWithNotionButton: React.FC<SignUpWithNotionButtonProps> = ({
 
   return (
     <button
-      onClick={handleGoogleLogIn}
+      onClick={handleNotionLogIn}
       className={twMerge(
         'flex justify-center items-center gap-2 border border-neutral-300 hover:border-neutral-500 bg-none hover:bg-neutral-200 transition-colors rounded-md px-2 py-2',
         className

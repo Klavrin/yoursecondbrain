@@ -1,7 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 
 import LandingPage from './(landing-page)'
-// import Home from '@/pages/home'
 import Home from './(home-page)'
 
 const Root = async () => {

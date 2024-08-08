@@ -3,12 +3,12 @@ import type { User } from '@supabase/supabase-js'
 
 interface useUserStoreProps {
   user: User | null
-  setUser: (newUserObject: User) => void
+  setUser: (newUserObject: User | null) => void
   userSignOut: void
 }
 
 export const useUserStore = create<useUserStoreProps>((set) => ({
   user: null,
-  setUser: (newUserObject: User) => set(() => ({ user: newUserObject })),
+  setUser: (newUserObject: User | null) => set(() => ({ user: newUserObject })),
   userSignOut: set(() => ({ user: null }))
 }))

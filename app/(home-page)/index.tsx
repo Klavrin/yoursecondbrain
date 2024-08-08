@@ -15,11 +15,16 @@ const Home = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser()
-      if (data.user) setUser(data.user)
+      try {
+        const { data } = await supabase.auth.getUser()
+        setUser(data.user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      } finally {
+        setLoading(false)
+      }
     }
     getUser()
-    setLoading(false)
   }, [])
 
   if (loading) return <Loading />

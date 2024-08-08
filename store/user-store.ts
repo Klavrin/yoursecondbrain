@@ -1,0 +1,14 @@
+import { create } from 'zustand'
+import type { User } from '@supabase/supabase-js'
+
+interface useUserStoreProps {
+  user: User | null
+  setUser: (newUserObject: User) => void
+  userSignOut: void
+}
+
+export const useUserStore = create<useUserStoreProps>((set) => ({
+  user: null,
+  setUser: (newUserObject: User) => set(() => ({ user: newUserObject })),
+  userSignOut: set(() => ({ user: null }))
+}))

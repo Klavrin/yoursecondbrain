@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { Avatar } from '@nextui-org/avatar'
 import {
@@ -10,20 +9,11 @@ import {
   DropdownTrigger
 } from '@nextui-org/dropdown'
 
-import type { User } from '@supabase/supabase-js'
+import { useUserStore } from '@/store/user-store'
 
 const Header = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const user = useUserStore((state) => state.user)
   const supabase = createClient()
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser()
-      if (data.user) setUser(data.user)
-    }
-
-    getUser()
-  }, [])
 
   return (
     <header className="w-full h-12 flex items-center px-4">

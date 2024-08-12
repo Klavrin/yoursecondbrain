@@ -21,7 +21,6 @@ import {
   IoSettingsSharp,
   IoToday
 } from 'react-icons/io5'
-import { IconBase, IconBaseProps } from 'react-icons'
 
 const sidebarButtons: {
   icon: ReactNode
@@ -44,7 +43,7 @@ const sidebarButtons: {
   {
     icon: <IoBarChart />,
     label: 'Dashboard',
-    tooltip: 'Your centralized place to manage your productivity',
+    tooltip: 'A centralized place to manage your productivity',
     onClick: () => {}
   },
   {

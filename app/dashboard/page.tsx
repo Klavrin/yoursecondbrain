@@ -4,6 +4,16 @@ import Sidebar from '@/components/sidebar'
 import Header from '@/components/header'
 
 import { Card } from '@nextui-org/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow
+} from '@nextui-org/table'
+import { Checkbox } from '@nextui-org/checkbox'
+import { IoCheckbox } from 'react-icons/io5'
 
 const Dashboard = () => {
   return (
@@ -29,6 +39,32 @@ const Dashboard = () => {
               <h2 className="text-5xl font-bold text-neutral-800">0</h2>
               <p className="text-base text-neutral-400">Goals achieved</p>
             </Card>
+          </div>
+
+          <div className="w-full mt-8">
+            <div className="flex items-center gap-1 text-neutral-400 mb-2">
+              <IoCheckbox />
+              <h2 className="text-lg font-bold">Tasks</h2>
+            </div>
+
+            <Table aria-label="Example static collection table">
+              <TableHeader>
+                <TableColumn>CHECKBOX</TableColumn>
+                <TableColumn>TASK</TableColumn>
+                <TableColumn>DATE</TableColumn>
+                <TableColumn>STATUS</TableColumn>
+              </TableHeader>
+              <TableBody>
+                <TableRow key="1">
+                  <TableCell>
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell>This is the content of the task</TableCell>
+                  <TableCell>12.08.2024</TableCell>
+                  <TableCell>Doing</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>

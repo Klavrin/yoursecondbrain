@@ -1,7 +1,6 @@
 'use client'
 
 import { createClient } from '@/utils/supabase/client'
-import { redirect } from 'next/navigation'
 import { IoSearch } from 'react-icons/io5'
 import { FaAnglesRight } from 'react-icons/fa6'
 
@@ -21,7 +20,11 @@ import { Tooltip } from '@nextui-org/tooltip'
 import { useSidebarStore } from '@/store/sidebar-store'
 import { useUser } from '@/provider/user-provider'
 
-const Header = () => {
+interface HeaderProps {
+  withFeedOptions?: boolean
+}
+
+const Header: React.FC<HeaderProps> = ({ withFeedOptions = true }) => {
   const sidebarOpened = useSidebarStore((state) => state.sidebarOpened)
   const setSidebarValue = useSidebarStore((state) => state.setSidebarValue)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -64,14 +67,16 @@ const Header = () => {
             <Kbd keys={['command']}>K</Kbd>
           </Button>
 
-          <div className="flex flex-wrap gap-4">
-            <Tooltip content="Feed options" delay={400} closeDelay={200} showArrow>
-              <Tabs aria-label="Tabs radius">
-                <Tab key="for-you" title="For you" />
-                <Tab key="following" title="Following" />
-              </Tabs>
-            </Tooltip>
-          </div>
+          {withFeedOptions && (
+            <div className="flex flex-wrap gap-4">
+              <Tooltip content="Feed options" delay={400} closeDelay={200} showArrow>
+                <Tabs aria-label="Tabs radius">
+                  <Tab key="for-you" title="For you" />
+                  <Tab key="following" title="Following" />
+                </Tabs>
+              </Tooltip>
+            </div>
+          )}
         </div>
 
         <div className="flex gap-6">

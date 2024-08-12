@@ -8,7 +8,7 @@ const Dashboard = () => {
     <div className="flex">
       <Sidebar />
       <div className="w-full">
-        <Header />
+        <Header withFeedOptions={false} />
         <div className="flex flex-col items-center">Dashboard</div>
       </div>
     </div>

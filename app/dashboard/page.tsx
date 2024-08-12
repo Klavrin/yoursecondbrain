@@ -42,7 +42,7 @@ const Dashboard = () => {
           </div>
 
           <div className="w-full mt-8">
-            <div className="flex items-center gap-1 text-neutral-400 mb-2">
+            <div className="flex items-center gap-1 text-neutral-400 mb-2 pl-2">
               <IoCheckbox />
               <h2 className="text-lg font-bold">Tasks</h2>
             </div>

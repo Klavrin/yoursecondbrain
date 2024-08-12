@@ -66,7 +66,7 @@ const sidebarButtons: {
   },
   {
     icon: <IoDocumentText />,
-    label: 'Quick notes',
+    label: 'Quick Notes',
     tooltip: 'Write quick notes that you need to remember',
     onClick: () => {}
   },
@@ -90,13 +90,13 @@ const sidebarButtons: {
   },
   {
     icon: <IoExtensionPuzzle />,
-    label: 'Habit tracker',
+    label: 'Habit Tracker',
     tooltip: 'Track your habits and stay motivated',
     onClick: () => {}
   },
   {
     icon: <IoCalendar />,
-    label: 'Weekly plan',
+    label: 'Weekly Plan',
     tooltip: 'Plan your week ahead',
     onClick: () => {}
   }

@@ -53,7 +53,7 @@ const Dashboard = () => {
               <h2 className="text-lg font-bold">Tasks</h2>
             </div>
 
-            <Table aria-label="Example static collection table">
+            <Table aria-label="Dashboard table">
               <TableHeader>
                 <TableColumn>CHECKBOX</TableColumn>
                 <TableColumn>TASK</TableColumn>

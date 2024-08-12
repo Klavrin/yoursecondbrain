@@ -2,6 +2,9 @@ import { GeistSans } from 'geist/font/sans'
 import { Lato } from 'next/font/google'
 import './globals.css'
 
+import { createClient } from '@/utils/supabase/server'
+import { UserProvider } from '@/provider/user-provider'
+
 const OpenSans = Lato({
   weight: '400',
   subsets: ['latin']
@@ -18,12 +21,19 @@ export const metadata = {
     'The productivity system you have been searching for. Frustrated with productivity tools that fall short? Unlock your full potential with yoursecondbrain. Transform scattered thoughts into a powerful knowledge base. Organize your ideas, research, and inspire others effortlessly.'
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const supabase = createClient()
+  const {
+    data: { user }
+  } = await supabase.auth.getUser()
+
   return (
     // <html lang="en" className={GeistSans.className}>
     <html lang="en" className={OpenSans.className}>
       <body className="light">
-        <main>{children}</main>
+        <main>
+          <UserProvider user={user}>{children}</UserProvider>
+        </main>
       </body>
     </html>
   )

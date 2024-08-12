@@ -1,13 +1,8 @@
 import { createClient } from '@/utils/supabase/server'
-
-import LandingPage from './(landing-page)'
-import Home from './(home-page)'
+import Home from './home/page'
+import Loading from '@/components/loading'
 
 const Root = async () => {
-  const supabase = createClient()
-  const { data } = await supabase.auth.getUser()
-
-  if (!data.user) return <LandingPage />
   return <Home />
 }
 

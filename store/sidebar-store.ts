@@ -1,3 +1,5 @@
+'use client'
+
 import { create } from 'zustand'
 
 interface useSidebarStoreProps {
@@ -7,9 +9,10 @@ interface useSidebarStoreProps {
 }
 
 export const useSidebarStore = create<useSidebarStoreProps>((set) => ({
-  sidebarOpened: localStorage.getItem('sidebar-opened')
-    ? JSON.parse(localStorage.getItem('sidebar-opened') as string)
-    : true,
+  // sidebarOpened: localStorage.getItem('sidebar-opened')
+  //   ? JSON.parse(localStorage.getItem('sidebar-opened') as string)
+  //   : true,
+  sidebarOpened: true,
   toggleSidebar: () => {
     set((state) => {
       localStorage.setItem('sidebar-opened', JSON.stringify(!state.sidebarOpened))

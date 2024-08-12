@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/user-store'
+import { useUser } from '@/provider/user-provider'
 import { Avatar as UserAvatar } from '@nextui-org/avatar'
 import {
   Dropdown,
@@ -13,7 +13,7 @@ interface AvatarProps {
 }
 
 const Avatar: React.FC<AvatarProps> = ({ onOpen }) => {
-  const user = useUserStore((state) => state.user)
+  const { user } = useUser()
 
   return (
     <Dropdown placement="bottom-end">
@@ -23,9 +23,9 @@ const Avatar: React.FC<AvatarProps> = ({ onOpen }) => {
           as="button"
           className="transition-transform"
           color="primary"
-          name={user?.user_metadata.name}
+          name={user.user_metadata.name}
           size="sm"
-          src={user?.user_metadata.picture}
+          src={user.user_metadata.picture}
         />
       </DropdownTrigger>
       <DropdownMenu aria-label="Profile Actions" variant="flat">

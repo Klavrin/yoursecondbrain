@@ -7,7 +7,7 @@ interface useUserStoreProps {
   userSignOut: void
 }
 
-export const useUserStore = create<useUserStoreProps>((set) => ({
+const useUserStore = create<useUserStoreProps>((set) => ({
   user: null,
   setUser: (newUserObject: User | null) => set(() => ({ user: newUserObject })),
   userSignOut: set(() => ({ user: null }))

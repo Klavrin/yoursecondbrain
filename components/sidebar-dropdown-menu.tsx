@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/user-store'
+import { useUser } from '@/provider/user-provider'
 import { Avatar } from '@nextui-org/avatar'
 import {
   Dropdown,
@@ -14,7 +14,7 @@ interface SidebarDropdownMenuProps {
 }
 
 const SidebarDropdownMenu: React.FC<SidebarDropdownMenuProps> = ({ children }) => {
-  const user = useUserStore((state) => state.user)
+  const { user } = useUser()
 
   return (
     <Dropdown

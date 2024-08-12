@@ -1,17 +1,18 @@
 import { useSidebarStore } from '@/store/sidebar-store'
-import { useUserStore } from '@/store/user-store'
 import { Avatar } from '@nextui-org/avatar'
 import { Button } from '@nextui-org/button'
 import { Tooltip } from '@nextui-org/tooltip'
 import { FaAnglesLeft } from 'react-icons/fa6'
 import SidebarDropdownMenu from './sidebar-dropdown-menu'
 import { useEffect } from 'react'
+import { useUser } from '@/provider/user-provider'
 
 const Sidebar = () => {
-  const user = useUserStore((state) => state.user)
   const sidebarOpened = useSidebarStore((state) => state.sidebarOpened)
   const setSidebarValue = useSidebarStore((state) => state.setSidebarValue)
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar)
+
+  const { user } = useUser()
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

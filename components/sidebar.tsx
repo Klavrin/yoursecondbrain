@@ -6,6 +6,7 @@ import { FaAnglesLeft } from 'react-icons/fa6'
 import SidebarDropdownMenu from './sidebar-dropdown-menu'
 import { ReactNode, useEffect } from 'react'
 import { useUser } from '@/provider/user-provider'
+import Link from 'next/link'
 
 import {
   IoBarChart,
@@ -26,79 +27,79 @@ const sidebarButtons: {
   icon: ReactNode
   label: string
   tooltip: string
-  onClick: () => void
+  href?: string
 }[] = [
   {
     icon: <IoSettingsSharp />,
     label: 'Settings',
     tooltip: 'Manage your account and settings',
-    onClick: () => {}
+    href: '/settings'
   },
   {
     icon: <IoHome />,
     label: 'Home',
     tooltip: 'See what your friends are doing',
-    onClick: () => {}
+    href: '/home'
   },
   {
     icon: <IoBarChart />,
     label: 'Dashboard',
     tooltip: 'A centralized place to manage your productivity',
-    onClick: () => {}
+    href: '/dashboard'
   },
   {
     icon: <IoCloudSharp />,
     label: 'Day Rating',
     tooltip: 'Rate your days',
-    onClick: () => {}
+    href: '/day-rating'
   },
   {
     icon: <IoCheckbox />,
     label: 'Tasks',
     tooltip: 'Schedule tasks that you need to complete',
-    onClick: () => {}
+    href: '/tasks'
   },
   {
     icon: <IoBook />,
     label: 'Notebook',
     tooltip: 'Store your thoughts in organized notebooks',
-    onClick: () => {}
+    href: '/notebook'
   },
   {
     icon: <IoDocumentText />,
     label: 'Quick Notes',
     tooltip: 'Write quick notes that you need to remember',
-    onClick: () => {}
+    href: '/quick-notes'
   },
   {
     icon: <IoToday />,
     label: 'Planner',
     tooltip: 'Plan your days and keep track of your progress',
-    onClick: () => {}
+    href: '/planner'
   },
   {
     icon: <IoLogoEuro />,
     label: 'Budget',
     tooltip: 'Keep track of your budget and expenses',
-    onClick: () => {}
+    href: '/budget'
   },
   {
     icon: <IoGolf />,
     label: 'Goals',
     tooltip: 'Set your goals and track your progress',
-    onClick: () => {}
+    href: '/goals'
   },
   {
     icon: <IoExtensionPuzzle />,
     label: 'Habit Tracker',
     tooltip: 'Track your habits and stay motivated',
-    onClick: () => {}
+    href: '/habit-tracker'
   },
   {
     icon: <IoCalendar />,
     label: 'Weekly Plan',
     tooltip: 'Plan your week ahead',
-    onClick: () => {}
+    href: '/weekly-plan'
   }
 ]
 
@@ -170,6 +171,8 @@ const Sidebar = () => {
             showArrow
           >
             <Button
+              as={Link}
+              href={button.href ?? '#'}
               size="sm"
               variant="light"
               className="w-full justify-start text-small text-neutral-600 font-bold"

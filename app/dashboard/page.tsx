@@ -14,8 +14,14 @@ import {
 } from '@nextui-org/table'
 import { Checkbox } from '@nextui-org/checkbox'
 import { IoCheckbox } from 'react-icons/io5'
+import { useUser } from '@/provider/user-provider'
+import { redirect } from 'next/navigation'
 
 const Dashboard = () => {
+  const { user } = useUser()
+
+  if (!user) redirect('/landing')
+
   return (
     <div className="flex">
       <Sidebar />

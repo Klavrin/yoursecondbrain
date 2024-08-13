@@ -36,8 +36,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         user_id: user.id,
         plan: 'premium',
         day_rating: {
+          rated_at: new Date(0),
           days_rated: 0,
-          horrible_day: 0,
+          horrible_days: 0,
           bad_days: 0,
           ok_days: 0,
           good_days: 0,

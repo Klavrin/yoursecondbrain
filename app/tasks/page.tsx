@@ -13,6 +13,7 @@ import {
   TableRow
 } from '@nextui-org/table'
 import { Input } from '@nextui-org/input'
+import { DateInput } from '@nextui-org/date-input'
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
 import { useUser } from '@/provider/user-provider'
@@ -20,6 +21,8 @@ import { formatTime } from '@/utils/format-time'
 import { useTasksSubscription } from '@/hooks/use-tasks-subscription'
 import { Tooltip } from '@nextui-org/tooltip'
 import { redirect } from 'next/navigation'
+import { today, getLocalTimeZone } from '@internationalized/date'
+import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -29,6 +32,7 @@ export enum TaskStatus {
 const Tasks = () => {
   const tasks = useTasksSubscription()
   const [taskName, setTaskName] = useState('')
+  const [dueDate, setDueDate] = useState(new Date())
   const supabase = createClient()
   const { user } = useUser()
 
@@ -42,11 +46,14 @@ const Tasks = () => {
     userId: string,
     isCompleted: boolean
   ) => {
+    if (isEmptyOrWhitespace(task)) return console.warn('The task name cannot be empty')
+
     const { error } = await supabase.from('tasks').insert({
       task,
       status,
       user_id: userId,
-      is_completed: isCompleted
+      is_completed: isCompleted,
+      due: dueDate
     })
 
     if (error) throw error
@@ -73,26 +80,36 @@ const Tasks = () => {
         <Header />
         <div className="flex flex-col items-center">
           <div className="w-full px-2 max-w-[1028px] mx-auto mt-4">
-            <Input
-              placeholder="Task name..."
-              onChange={(e) => setTaskName(e.target.value)}
-              value={taskName}
-            />
-            <Button
-              onClick={() =>
-                handleCreateTask(taskName, TaskStatus.IN_PROGRESS, user.id, false)
-              }
-              className="w-full mb-4 mt-1"
-              color="primary"
-            >
-              Add new task
-            </Button>
+            <div>
+              <Input
+                placeholder="Task name..."
+                onChange={(e) => setTaskName(e.target.value)}
+                value={taskName}
+              />
+              <div className="flex">
+                <Button
+                  onClick={() =>
+                    handleCreateTask(taskName, TaskStatus.IN_PROGRESS, user.id, false)
+                  }
+                  className="w-full mb-4 mt-1"
+                  color="primary"
+                >
+                  Add new task
+                </Button>
+
+                <DateInput
+                  label="Due date"
+                  defaultValue={today(getLocalTimeZone())}
+                  onChange={(e) => setDueDate(new Date(e.year, e.month - 1, e.day))}
+                />
+              </div>
+            </div>
 
             <Table aria-label="Tasks table">
               <TableHeader>
                 <TableColumn>CHECKBOX</TableColumn>
                 <TableColumn>TASK</TableColumn>
-                <TableColumn>DATE</TableColumn>
+                <TableColumn>DUE</TableColumn>
                 <TableColumn> </TableColumn>
               </TableHeader>
               <TableBody>
@@ -114,7 +131,7 @@ const Tasks = () => {
                       </Tooltip>
                     </TableCell>
                     <TableCell>{task.task}</TableCell>
-                    <TableCell>{formatTime(task.created_at)}</TableCell>
+                    <TableCell>{formatTime(task.due)}</TableCell>
                     <TableCell>
                       <Button
                         color="danger"

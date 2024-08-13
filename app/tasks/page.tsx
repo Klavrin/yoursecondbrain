@@ -23,6 +23,7 @@ import { Tooltip } from '@nextui-org/tooltip'
 import { redirect } from 'next/navigation'
 import { today, getLocalTimeZone } from '@internationalized/date'
 import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
+import toast from 'react-hot-toast'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -46,7 +47,7 @@ const Tasks = () => {
     userId: string,
     isCompleted: boolean
   ) => {
-    if (isEmptyOrWhitespace(task)) return console.warn('The task name cannot be empty')
+    if (isEmptyOrWhitespace(task)) return toast.error('Task name cannot be empty')
 
     const { error } = await supabase.from('tasks').insert({
       task,

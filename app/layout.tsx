@@ -4,6 +4,7 @@ import './globals.css'
 
 import { createClient } from '@/utils/supabase/server'
 import { UserProvider } from '@/provider/user-provider'
+import { Toaster } from 'react-hot-toast'
 
 const OpenSans = Lato({
   weight: '400',
@@ -32,6 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={OpenSans.className}>
       <body className="light">
         <main>
+          <Toaster />
           <UserProvider user={user}>{children}</UserProvider>
         </main>
       </body>

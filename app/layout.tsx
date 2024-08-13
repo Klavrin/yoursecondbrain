@@ -28,6 +28,25 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     data: { user }
   } = await supabase.auth.getUser()
 
+  // Add user to the users table if it doesn't exist
+  if (user) {
+    const userExists = await supabase.from('users').select('*').eq('user_id', user.id)
+    if (userExists.data?.length === 0) {
+      await supabase.from('users').insert({
+        user_id: user.id,
+        plan: 'premium',
+        day_rating: {
+          days_rated: 0,
+          horrible_day: 0,
+          bad_days: 0,
+          ok_days: 0,
+          good_days: 0,
+          amazing_days: 0
+        }
+      })
+    }
+  }
+
   return (
     // <html lang="en" className={GeistSans.className}>
     <html lang="en" className={OpenSans.className}>

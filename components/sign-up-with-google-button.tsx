@@ -1,5 +1,6 @@
 'use client'
 
+import { useUser } from '@/provider/user-provider'
 import { createClient } from '@/utils/supabase/client'
 import { ReactNode } from 'react'
 import { FaGoogle } from 'react-icons/fa6'

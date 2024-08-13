@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
 import { Button } from '@nextui-org/button'
+import { redirect } from 'next/navigation'
 
 const DayRating = () => {
   const [days, setDays] = useState({
@@ -22,8 +23,9 @@ const DayRating = () => {
   const supabase = createClient()
   const { user } = useUser()
 
-  console.log(new Date(days.rated_at).getUTCDate())
-  console.log(new Date().getUTCDate())
+  if (!user) {
+    redirect('/')
+  }
 
   useEffect(() => {
     const getDays = async () => {

@@ -22,12 +22,14 @@ import {
   IoSettingsSharp,
   IoToday
 } from 'react-icons/io5'
+import { usePathname } from 'next/navigation'
+import { twMerge } from 'tailwind-merge'
 
 const sidebarButtons: {
   icon: ReactNode
   label: string
   tooltip: string
-  href?: string
+  href: string
 }[] = [
   {
     icon: <IoSettingsSharp />,
@@ -108,6 +110,7 @@ const Sidebar = () => {
   const sidebarOpened = useSidebarStore((state) => state.sidebarOpened)
   const setSidebarValue = useSidebarStore((state) => state.setSidebarValue)
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar)
+  const pathname = usePathname()
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -175,7 +178,9 @@ const Sidebar = () => {
               href={button.href ?? '#'}
               size="sm"
               variant="light"
-              className="w-full justify-start text-small text-neutral-600 font-bold"
+              className={`w-full justify-start text-small text-neutral-600 font-bold ${
+                pathname === button.href ? 'bg-neutral-200' : ''
+              }`}
             >
               {button.icon}
               {button.label}

@@ -16,11 +16,30 @@ import { Checkbox } from '@nextui-org/checkbox'
 import { IoCheckbox } from 'react-icons/io5'
 import { useUser } from '@/provider/user-provider'
 import { redirect } from 'next/navigation'
+import { createClient } from '@/utils/supabase/client'
+import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
+  const [tasksDueToday, setTasksDueToday] = useState([])
   const { user } = useUser()
+  const supabase = createClient()
 
   if (!user) redirect('/landing')
+
+  useEffect(() => {
+    const getTasksDueToday = async () => {
+      const { data, error } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('is_completed', false)
+
+      if (error) throw error
+
+      setTasksDueToday(data as any)
+    }
+    getTasksDueToday()
+  }, [])
 
   return (
     <div className="flex">
@@ -38,7 +57,9 @@ const Dashboard = () => {
               <p className="text-base text-neutral-400">Total earned</p>
             </Card>
             <Card className="p-4">
-              <h2 className="text-5xl font-bold text-neutral-800">0</h2>
+              <h2 className="text-5xl font-bold text-neutral-800">
+                {tasksDueToday.length}
+              </h2>
               <p className="text-base text-neutral-400">Tasks due today</p>
             </Card>
             <Card className="p-4">

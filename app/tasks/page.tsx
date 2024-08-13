@@ -19,6 +19,7 @@ import { useUser } from '@/provider/user-provider'
 import { formatTime } from '@/utils/format-time'
 import { useTasksSubscription } from '@/hooks/use-tasks-subscription'
 import { Tooltip } from '@nextui-org/tooltip'
+import { redirect } from 'next/navigation'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -31,7 +32,9 @@ const Tasks = () => {
   const supabase = createClient()
   const { user } = useUser()
 
-  console.log(tasks)
+  if (!user) {
+    redirect('/')
+  }
 
   const handleCreateTask = async (
     task: string,

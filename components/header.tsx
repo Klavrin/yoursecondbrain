@@ -18,7 +18,7 @@ import Avatar from './avatar'
 import UserStreak from '@/components/user-streak'
 import { Tooltip } from '@nextui-org/tooltip'
 import { useSidebarStore } from '@/store/sidebar-store'
-import { useUser } from '@/provider/user-provider'
+import { useRouter } from 'next/navigation'
 
 interface HeaderProps {
   withFeedOptions?: boolean
@@ -29,10 +29,11 @@ const Header: React.FC<HeaderProps> = ({ withFeedOptions = true }) => {
   const setSidebarValue = useSidebarStore((state) => state.setSidebarValue)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const supabase = createClient()
+  const router = useRouter()
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
-    // setUser(null)
+    router.push('/landing')
   }
 
   return (

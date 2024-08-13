@@ -18,6 +18,7 @@ import Sidebar from '@/components/sidebar'
 import { useUser } from '@/provider/user-provider'
 import { formatTime } from '@/utils/format-time'
 import { useTasksSubscription } from '@/hooks/use-tasks-subscription'
+import { Tooltip } from '@nextui-org/tooltip'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -25,11 +26,12 @@ export enum TaskStatus {
 }
 
 const Tasks = () => {
-  // const [tasks, setTasks] = useState<any>([])
+  const tasks = useTasksSubscription()
   const [taskName, setTaskName] = useState('')
   const supabase = createClient()
   const { user } = useUser()
-  const tasks = useTasksSubscription()
+
+  console.log(tasks)
 
   const handleCreateTask = async (
     task: string,
@@ -44,6 +46,20 @@ const Tasks = () => {
       is_completed: isCompleted
     })
 
+    if (error) throw error
+  }
+
+  const handleCompleteTask = async (taskId: string, is_completed: boolean) => {
+    const { error } = await supabase
+      .from('tasks')
+      .update({ is_completed: !is_completed })
+      .eq('id', taskId)
+
+    if (error) throw error
+  }
+
+  const handleDeleteTask = async (taskId: string) => {
+    const error = await supabase.from('tasks').delete().eq('id', taskId)
     if (error) throw error
   }
 
@@ -74,17 +90,37 @@ const Tasks = () => {
                 <TableColumn>CHECKBOX</TableColumn>
                 <TableColumn>TASK</TableColumn>
                 <TableColumn>DATE</TableColumn>
-                <TableColumn>STATUS</TableColumn>
+                <TableColumn> </TableColumn>
               </TableHeader>
               <TableBody>
                 {tasks.map((task: any) => (
                   <TableRow key={task.id}>
                     <TableCell>
-                      <Checkbox value={task.is_completed} />
+                      <Tooltip
+                        content="Marking as complete will delete this todo after 5 minutes"
+                        placement="right-start"
+                        delay={600}
+                        closeDelay={0}
+                        color="warning"
+                        size="sm"
+                      >
+                        <Checkbox
+                          isSelected={task.is_completed}
+                          onChange={() => handleCompleteTask(task.id, task.is_completed)}
+                        />
+                      </Tooltip>
                     </TableCell>
                     <TableCell>{task.task}</TableCell>
                     <TableCell>{formatTime(task.created_at)}</TableCell>
-                    <TableCell>{task.status}</TableCell>
+                    <TableCell>
+                      <Button
+                        color="danger"
+                        size="sm"
+                        onClick={() => handleDeleteTask(task.id)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

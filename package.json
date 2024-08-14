@@ -6,6 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.30.5",
+    "@editorjs/header": "^2.8.7",
+    "@editorjs/paragraph": "^2.11.6",
     "@internationalized/date": "^3.5.5",
     "@nextui-org/avatar": "^2.0.32",
     "@nextui-org/button": "^2.0.37",
@@ -27,7 +30,6 @@
     "@nextui-org/tooltip": "^2.0.39",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
-    "@yoopta/starter-kit": "^4.6.9",
     "autoprefixer": "10.4.17",
     "framer-motion": "^11.3.21",
     "geist": "^1.2.1",

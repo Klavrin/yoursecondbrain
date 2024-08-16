@@ -9,19 +9,8 @@ import Sidebar from '@/components/sidebar'
 import Header from '@/components/header'
 
 const QuickNotes = () => {
+  const [contentLength, setContentLength] = useState(0)
   const selectionBoxRoot = useRef<HTMLDivElement | null>(null)
-
-  // const handleStarterKitChange = (data: any) => {
-  //   console.log(data)
-
-  //   if (data.length > 1000) {
-  //     toast(
-  //       'Quick notes cannot exceed 1000 characters. They are called quick notes for a reason!'
-  //     )
-  //     return
-  //   }
-  //   setValue(data)
-  // }
 
   return (
     <div className="flex">
@@ -30,11 +19,11 @@ const QuickNotes = () => {
         <Header withFeedOptions={false} />
         <div className="flex flex-col items-center mx-auto mt-4">
           <ScrollShadow ref={selectionBoxRoot} className="w-full h-[calc(100vh-92px)]">
-            <Editor />
+            <Editor contentLength={contentLength} setContentLength={setContentLength} />
           </ScrollShadow>
         </div>
         <div className="h-3">
-          <h6 className="text-small"> words</h6>
+          <h6 className="text-small w-full text-end">{contentLength}/1000 characters</h6>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import EditorJS, { OutputBlockData } from '@editorjs/editorjs'
+import EditorJS from '@editorjs/editorjs'
 import Paragraph from '@editorjs/paragraph'
 import Header from '@editorjs/header'
 import NestedList from '@editorjs/nested-list'
@@ -8,13 +8,17 @@ import Checklist from '@editorjs/checklist' // misses types
 //@ts-ignore
 import Table from '@editorjs/table' // misses types
 import toast from 'react-hot-toast'
+import { createClient } from '@/utils/supabase/client'
 
 interface EditorProps {
   contentLength: number
   setContentLength: (contentLen: number) => void
+  note: any
 }
 
-const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength }) => {
+const supabase = createClient()
+
+const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength, note }) => {
   const editorRef = useRef<EditorJS | null>(null)
 
   useEffect(() => {
@@ -46,6 +50,7 @@ const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength }) => {
     if (!editorRef.current) {
       const editor = new EditorJS({
         holder: 'editorjs',
+        data: JSON.parse(note.content),
         tools: {
           paragraph: Paragraph,
           header: Header,
@@ -56,8 +61,6 @@ const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength }) => {
         placeholder: 'Type here to write...',
         onChange: async (api) => {
           const editorContent = await api.saver.save()
-
-          console.log(api)
 
           const getNumberOfChars = (content: any) => {
             let contentLen = 0
@@ -100,6 +103,12 @@ const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength }) => {
           }
 
           setContentLength(getNumberOfChars(editorContent))
+          const { error } = await supabase
+            .from('notes')
+            .update({ content: JSON.stringify(editorContent) })
+            .eq('id', note.id)
+
+          if (error) throw error
         }
       })
       editorRef.current = editor

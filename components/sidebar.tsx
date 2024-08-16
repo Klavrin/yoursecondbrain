@@ -10,7 +10,6 @@ import Link from 'next/link'
 
 import {
   IoBarChart,
-  IoBook,
   IoCalendar,
   IoCheckbox,
   IoCloudSharp,
@@ -23,7 +22,6 @@ import {
   IoToday
 } from 'react-icons/io5'
 import { usePathname } from 'next/navigation'
-import { twMerge } from 'tailwind-merge'
 
 const sidebarButtons: {
   icon: ReactNode
@@ -60,12 +58,6 @@ const sidebarButtons: {
     label: 'Tasks',
     tooltip: 'Schedule tasks that you need to complete',
     href: '/tasks'
-  },
-  {
-    icon: <IoBook />,
-    label: 'Notebook',
-    tooltip: 'Store your thoughts in organized notebooks',
-    href: '/notebook'
   },
   {
     icon: <IoDocumentText />,

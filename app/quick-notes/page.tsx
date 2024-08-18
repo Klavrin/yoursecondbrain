@@ -14,6 +14,7 @@ import toast from 'react-hot-toast'
 import Link from 'next/link'
 import { useNotesSubscription, type Note } from '@/hooks/use-notes-subscription'
 import { Card } from '@nextui-org/card'
+import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
 
 const supabase = createClient()
 
@@ -21,6 +22,7 @@ const Notebook = () => {
   // const [notes, setNotes] = useState<Note[]>([])
   const notes = useNotesSubscription()
   const [noteTitle, setNoteTitle] = useState('')
+  const [newNoteTitle, setNewNoteTitle] = useState('')
   const { user } = useUser()
 
   console.log('notes', notes)
@@ -51,6 +53,16 @@ const Notebook = () => {
     if (error) throw error
   }
 
+  const handleEditTitle = async (noteId: string) => {
+    const { error } = await supabase
+      .from('notes')
+      .update({ title: newNoteTitle })
+      .eq('id', noteId)
+
+    if (error) throw error
+    setNewNoteTitle('')
+  }
+
   return (
     <div className="flex">
       <Sidebar />
@@ -75,16 +87,33 @@ const Notebook = () => {
                     <Button
                       color="danger"
                       className="w-full"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleDeleteNote(e, note.id)
-                      }}
+                      onClick={(e) => handleDeleteNote(e, note.id)}
                     >
                       Delete
                     </Button>
-                    <Button color="primary" className="w-full">
-                      Edit title
-                    </Button>
+                    <Popover placement="bottom" showArrow backdrop="opaque">
+                      <PopoverTrigger>
+                        <Button color="primary" className="w-full">
+                          Edit title
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <div className="flex">
+                          <Input
+                            placeholder="New note title..."
+                            onChange={(e) => setNewNoteTitle(e.target.value)}
+                            value={newNoteTitle}
+                          />
+                          <Button
+                            color="primary"
+                            className="self-end"
+                            onClick={() => handleEditTitle(note.id)}
+                          >
+                            Done
+                          </Button>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 </Card>
               ))}

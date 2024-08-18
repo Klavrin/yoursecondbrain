@@ -51,6 +51,20 @@ export const useNotesSubscription = () => {
           setNotes(filteredNotes)
         }
       )
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'notes' },
+        (payload) => {
+          console.log('this is the payload', payload)
+          const mappedNotes = notes.map((note: Note) => {
+            if (note.id === payload.new.id) {
+              return payload.new
+            }
+            return note
+          })
+          setNotes(mappedNotes)
+        }
+      )
       .subscribe()
   }, [notes, supabase, setNotes])
 

@@ -37,9 +37,18 @@ export const useNotesSubscription = () => {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'notes' },
         (payload) => {
-          console.log('this is the payload', payload) // why am i getting this console.log on the server?
+          console.log('this is the payload', payload)
           console.log([...notes, payload.new])
           setNotes([...notes, payload.new as Note])
+        }
+      )
+      .on(
+        'postgres_changes',
+        { event: 'DELETE', schema: 'public', table: 'notes' },
+        (payload) => {
+          console.log('this is the payload', payload)
+          const filteredNotes = notes.filter((note: Note) => note.id !== payload.old.id)
+          setNotes(filteredNotes)
         }
       )
       .subscribe()

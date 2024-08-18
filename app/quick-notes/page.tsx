@@ -13,6 +13,7 @@ import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
 import { useNotesSubscription, type Note } from '@/hooks/use-notes-subscription'
+import { Card } from '@nextui-org/card'
 
 const supabase = createClient()
 
@@ -41,6 +42,15 @@ const Notebook = () => {
     setNoteTitle('')
   }
 
+  const handleDeleteNote = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    noteId: string
+  ) => {
+    e.stopPropagation()
+    const { error } = await supabase.from('notes').delete().eq('id', noteId)
+    if (error) throw error
+  }
+
   return (
     <div className="flex">
       <Sidebar />
@@ -55,11 +65,28 @@ const Notebook = () => {
             />
             <Button onClick={handleCreateNote}>Create new note</Button>
 
-            <div>
+            <div className="flex gap-2">
               {notes.map((note: Note) => (
-                <Button as={Link} href={`/quick-notes/${note.id}`} key={note.id}>
-                  {note.title}
-                </Button>
+                <Card key={note.id} className="w-1/3 p-2">
+                  <Link href={`/quick-notes/${note.id}`}>
+                    <h2 className="text-center mb-4">{note.title}</h2>
+                  </Link>
+                  <div className="flex gap-1">
+                    <Button
+                      color="danger"
+                      className="w-full"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleDeleteNote(e, note.id)
+                      }}
+                    >
+                      Delete
+                    </Button>
+                    <Button color="primary" className="w-full">
+                      Edit title
+                    </Button>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>

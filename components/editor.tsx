@@ -21,6 +21,8 @@ const supabase = createClient()
 const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength, note }) => {
   const editorRef = useRef<EditorJS | null>(null)
 
+  // console.log(contentLength)
+
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
       const pastedData = (e.clipboardData || window.clipboardData).getData('text')
@@ -103,6 +105,7 @@ const Editor: React.FC<EditorProps> = ({ contentLength, setContentLength, note }
           }
 
           setContentLength(getNumberOfChars(editorContent))
+          console.log('save data')
           const { error } = await supabase
             .from('notes')
             .update({ content: JSON.stringify(editorContent) })

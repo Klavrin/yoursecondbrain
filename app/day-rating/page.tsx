@@ -7,6 +7,7 @@ import toast from 'react-hot-toast'
 
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
+import Loading from '@/components/loading'
 import { Button } from '@nextui-org/button'
 import { redirect } from 'next/navigation'
 
@@ -20,6 +21,7 @@ const DayRating = () => {
     good_days: 0,
     amazing_days: 0
   })
+  const [loading, setLoading] = useState(true)
   const supabase = createClient()
   const { user } = useUser()
 
@@ -36,6 +38,7 @@ const DayRating = () => {
       if (error) throw error
 
       setDays(data[0].day_rating)
+      setLoading(false)
     }
     getDays()
   }, [])
@@ -159,6 +162,8 @@ const DayRating = () => {
     if (error) throw error
     setDays(updatedDays)
   }
+
+  if (loading) return <Loading />
 
   return (
     <div className="flex">

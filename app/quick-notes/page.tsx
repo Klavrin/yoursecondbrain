@@ -65,9 +65,9 @@ const Notebook = () => {
 
             <div>
               {notes.map((note) => (
-                <Link href={`/quick-notes/${note.id}`} key={note.id}>
+                <Button as={Link} href={`/quick-notes/${note.id}`} key={note.id}>
                   {note.title}
-                </Link>
+                </Button>
               ))}
             </div>
           </div>

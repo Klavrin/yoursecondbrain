@@ -44,7 +44,6 @@ const QuickNotes = ({ params }: { params: { note: string } }) => {
             <Editor
               contentLength={contentLength}
               setContentLength={setContentLength}
-              noteId={note.id}
               note={note}
             />
           </ScrollShadow>

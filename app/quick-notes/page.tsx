@@ -12,29 +12,21 @@ import { Input } from '@nextui-org/input'
 import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import { useNotesSubscription, type Note } from '@/hooks/use-notes-subscription'
+
+const supabase = createClient()
 
 const Notebook = () => {
-  const [notes, setNotes] = useState<any[]>([])
+  // const [notes, setNotes] = useState<Note[]>([])
+  const notes = useNotesSubscription()
   const [noteTitle, setNoteTitle] = useState('')
-  const supabase = createClient()
   const { user } = useUser()
+
+  console.log('notes', notes)
 
   if (!user) {
     redirect('/')
   }
-
-  useEffect(() => {
-    const getNotes = async () => {
-      const { data, error } = await supabase
-        .from('notes')
-        .select('*')
-        .eq('user_id', user.id)
-      if (error) throw error
-
-      setNotes(data)
-    }
-    getNotes()
-  }, [])
 
   const handleCreateNote = async () => {
     if (isEmptyOrWhitespace(noteTitle)) {
@@ -64,7 +56,7 @@ const Notebook = () => {
             <Button onClick={handleCreateNote}>Create new note</Button>
 
             <div>
-              {notes.map((note) => (
+              {notes.map((note: Note) => (
                 <Button as={Link} href={`/quick-notes/${note.id}`} key={note.id}>
                   {note.title}
                 </Button>

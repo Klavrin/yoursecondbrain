@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useUser } from '@/provider/user-provider'
 
@@ -14,6 +14,7 @@ export interface Note {
 
 export const useNotesSubscription = () => {
   const [notes, setNotes] = useState<Note[]>([])
+  const [loading, setLoading] = useState(true)
   const supabase = createClient()
   const { user } = useUser()
 
@@ -26,6 +27,7 @@ export const useNotesSubscription = () => {
       if (error) throw error
 
       setNotes(data)
+      setLoading(false)
     }
     getNotes()
   }, [])
@@ -68,5 +70,5 @@ export const useNotesSubscription = () => {
       .subscribe()
   }, [notes, supabase, setNotes])
 
-  return notes
+  return [notes, loading]
 }

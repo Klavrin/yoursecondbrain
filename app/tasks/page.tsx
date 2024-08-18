@@ -24,6 +24,7 @@ import { redirect } from 'next/navigation'
 import { today, getLocalTimeZone } from '@internationalized/date'
 import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
+import Loading from '@/components/loading'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -31,7 +32,7 @@ export enum TaskStatus {
 }
 
 const Tasks = () => {
-  const tasks = useTasksSubscription()
+  const [tasks, loading] = useTasksSubscription()
   const [taskName, setTaskName] = useState('')
   const [dueDate, setDueDate] = useState(new Date())
   const supabase = createClient()
@@ -73,6 +74,8 @@ const Tasks = () => {
     const error = await supabase.from('tasks').delete().eq('id', taskId)
     if (error) throw error
   }
+
+  if (loading) return <Loading />
 
   return (
     <div className="flex">

@@ -4,6 +4,7 @@ import { useUser } from '@/provider/user-provider'
 
 export const useTasksSubscription = () => {
   const [tasks, setTasks] = useState<any>([])
+  const [loading, setLoading] = useState(true)
   const supabase = createClient()
   const { user } = useUser()
 
@@ -13,6 +14,7 @@ export const useTasksSubscription = () => {
       setTasks(data)
     }
     getTasks()
+    setLoading(false)
   }, [])
 
   supabase
@@ -50,5 +52,5 @@ export const useTasksSubscription = () => {
     )
     .subscribe()
 
-  return tasks
+  return [tasks, loading]
 }

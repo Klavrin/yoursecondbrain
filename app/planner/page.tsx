@@ -1,9 +1,19 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
+import Loading from '@/components/loading'
 
 const Planner = () => {
+  const [loading, setLaoading] = useState(true)
+
+  useEffect(() => {
+    setLaoading(false)
+  }, [])
+
+  if (loading) return <Loading />
+
   return (
     <div className="flex">
       <Sidebar />

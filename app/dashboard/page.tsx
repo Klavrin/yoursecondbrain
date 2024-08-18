@@ -1,8 +1,5 @@
 'use client'
 
-import Sidebar from '@/components/sidebar'
-import Header from '@/components/header'
-
 import { Card } from '@nextui-org/card'
 import {
   Table,
@@ -19,8 +16,13 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { useEffect, useState } from 'react'
 
+import Sidebar from '@/components/sidebar'
+import Header from '@/components/header'
+import Loading from '@/components/loading'
+
 const Dashboard = () => {
   const [tasksDueToday, setTasksDueToday] = useState([])
+  const [loading, setLoading] = useState(true)
   const { user } = useUser()
   const supabase = createClient()
 
@@ -37,9 +39,12 @@ const Dashboard = () => {
       if (error) throw error
 
       setTasksDueToday(data as any)
+      setLoading(false)
     }
     getTasksDueToday()
   }, [])
+
+  if (loading) return <Loading />
 
   return (
     <div className="flex">

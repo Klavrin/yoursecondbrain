@@ -15,12 +15,12 @@ import Link from 'next/link'
 import { useNotesSubscription, type Note } from '@/hooks/use-notes-subscription'
 import { Card } from '@nextui-org/card'
 import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/popover'
+import Loading from '@/components/loading'
 
 const supabase = createClient()
 
 const Notebook = () => {
-  // const [notes, setNotes] = useState<Note[]>([])
-  const notes = useNotesSubscription()
+  const [notes, loading] = useNotesSubscription()
   const [noteTitle, setNoteTitle] = useState('')
   const [newNoteTitle, setNewNoteTitle] = useState('')
   const { user } = useUser()
@@ -62,6 +62,8 @@ const Notebook = () => {
     if (error) throw error
     setNewNoteTitle('')
   }
+
+  if (loading) return <Loading />
 
   return (
     <div className="flex">

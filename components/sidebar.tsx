@@ -18,8 +18,7 @@ import {
   IoGolf,
   IoHome,
   IoLogoEuro,
-  IoSettingsSharp,
-  IoToday
+  IoSettingsSharp
 } from 'react-icons/io5'
 import { usePathname } from 'next/navigation'
 
@@ -64,12 +63,6 @@ const sidebarButtons: {
     label: 'Quick Notes',
     tooltip: 'Write quick notes that you need to remember',
     href: '/quick-notes'
-  },
-  {
-    icon: <IoToday />,
-    label: 'Planner',
-    tooltip: 'Plan your days and keep track of your progress',
-    href: '/planner'
   },
   {
     icon: <IoLogoEuro />,

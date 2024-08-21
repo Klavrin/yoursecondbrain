@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import { createClient } from '@/utils/supabase/client'
+
 import {
   Table,
   TableBody,
@@ -7,18 +10,35 @@ import {
   TableRow
 } from '@nextui-org/table'
 import BudgetModal from './budget-modal'
-import { useState } from 'react'
 import CloseButton from './close-button'
+import { useUser } from '@/provider/user-provider'
+import { redirect } from 'next/navigation'
 
 interface BudgetTableProps {
   title: string
-  // income: any
-  // setModalOpened: (value: boolean) => void
+  type: 'income' | 'expenses'
 }
 
-const BudgetTable: React.FC<BudgetTableProps> = ({ title }) => {
+const supabase = createClient()
+
+const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
   const [rows, setRows] = useState<any>([])
   const [modalOpened, setModalOpened] = useState(false)
+  const { user } = useUser()
+
+  if (!user) redirect('/')
+
+  useEffect(() => {
+    const getRows = async () => {
+      const { data } = await supabase
+        .from('budget')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('type', type)
+      setRows(data)
+    }
+    getRows()
+  }, [])
 
   return (
     <div>
@@ -56,7 +76,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title }) => {
       <BudgetModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}
-        setRows={setRows}
+        type={type}
       />
     </div>
   )

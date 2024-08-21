@@ -15,11 +15,12 @@ import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
 import { removeWhitespace } from '@/utils/remove-whitespace'
 import { currencies } from '@/constants/currencies'
+import { createClient } from '@/utils/supabase/client'
 
 interface BudgetModalProps {
   modalOpened: boolean
   setModalOpened: (value: boolean) => void
-  setRows: (value: any) => void
+  type: 'income' | 'expenses'
 }
 
 enum Category {
@@ -33,34 +34,34 @@ enum Category {
 }
 
 const categories = Array.from(Object.values(Category))
+const supabase = createClient()
 
 const BudgetModal: React.FC<BudgetModalProps> = ({
   modalOpened,
   setModalOpened,
-  setRows
+  type
 }) => {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('0.00')
   const [category, setCategory] = useState<Category>(Category.Salary)
   const [currency, setCurrency] = useState<string>('US Dollar')
 
-  const handleCreateNewRow = () => {
+  const handleCreateNewRow = async () => {
     if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(amount)) {
       toast.error('Please enter a name and an amount.')
       return
     }
 
-    setRows((rows: { name: string; amount: number; category: Category }[]) => [
-      ...rows,
-      {
-        name,
-        amount,
-        category,
-        currency: currencies.find((c) => c.name === currency)?.symbol
-      }
-    ])
+    const { error } = await supabase.from('budget').insert({
+      name,
+      amount,
+      category,
+      currency: currencies.find((c) => c.name === currency)?.symbol,
+      type
+    })
 
-    console.log([name, amount, category])
+    if (error) throw error
+
     setName('')
     setAmount('')
     setCategory(Category.Salary)

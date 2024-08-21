@@ -25,6 +25,7 @@ import { today, getLocalTimeZone } from '@internationalized/date'
 import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
 import Loading from '@/components/loading'
+import CloseButton from '@/components/close-button'
 
 export enum TaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
@@ -136,14 +137,8 @@ const Tasks = () => {
                     </TableCell>
                     <TableCell>{task.task}</TableCell>
                     <TableCell>{formatTime(task.due)}</TableCell>
-                    <TableCell>
-                      <Button
-                        color="danger"
-                        size="sm"
-                        onClick={() => handleDeleteTask(task.id)}
-                      >
-                        Delete
-                      </Button>
+                    <TableCell className="flex justify-end p-0">
+                      <CloseButton onClick={() => handleDeleteTask(task.id)} />
                     </TableCell>
                   </TableRow>
                 ))}

@@ -40,6 +40,11 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
     getRows()
   }, [])
 
+  const handleDeleteRow = async (id: string) => {
+    const { error } = await supabase.from('budget').delete().eq('id', id)
+    if (error) throw error
+  }
+
   return (
     <div>
       <h2 className="text-lg font-bold text-neutral-400 pl-2 ">{title}</h2>
@@ -60,7 +65,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
               </TableCell>
               <TableCell>{row.category}</TableCell>
               <TableCell className="flex justify-end p-0">
-                <CloseButton />
+                <CloseButton onClick={() => handleDeleteRow(row.id)} />
               </TableCell>
             </TableRow>
           ))}

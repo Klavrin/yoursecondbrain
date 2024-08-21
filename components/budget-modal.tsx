@@ -16,10 +16,12 @@ import toast from 'react-hot-toast'
 import { removeWhitespace } from '@/utils/remove-whitespace'
 import { currencies } from '@/constants/currencies'
 import { createClient } from '@/utils/supabase/client'
+import type { Row } from './budget-table'
 
 interface BudgetModalProps {
   modalOpened: boolean
   setModalOpened: (value: boolean) => void
+  setRows: (value: any) => void
   type: 'income' | 'expenses'
 }
 
@@ -39,6 +41,7 @@ const supabase = createClient()
 const BudgetModal: React.FC<BudgetModalProps> = ({
   modalOpened,
   setModalOpened,
+  setRows,
   type
 }) => {
   const [name, setName] = useState('')
@@ -52,15 +55,19 @@ const BudgetModal: React.FC<BudgetModalProps> = ({
       return
     }
 
-    const { error } = await supabase.from('budget').insert({
-      name,
-      amount,
-      category,
-      currency: currencies.find((c) => c.name === currency)?.symbol,
-      type
-    })
+    const { error, data } = await supabase
+      .from('budget')
+      .insert({
+        name,
+        amount,
+        category,
+        currency: currencies.find((c) => c.name === currency)?.symbol,
+        type
+      })
+      .select('*')
 
     if (error) throw error
+    setRows((rows: Row[]) => [...rows, data[0]])
 
     setName('')
     setAmount('')

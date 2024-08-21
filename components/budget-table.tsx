@@ -19,6 +19,15 @@ interface BudgetTableProps {
   type: 'income' | 'expenses'
 }
 
+export interface Row {
+  id: string
+  name: string
+  amount: number
+  category: string
+  currency: string
+  type: 'income' | 'expenses'
+}
+
 const supabase = createClient()
 
 const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
@@ -43,6 +52,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
   const handleDeleteRow = async (id: string) => {
     const { error } = await supabase.from('budget').delete().eq('id', id)
     if (error) throw error
+    setRows(rows.filter((row: Row) => row.id !== id))
   }
 
   return (
@@ -81,6 +91,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
       <BudgetModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}
+        setRows={setRows}
         type={type}
       />
     </div>

@@ -14,11 +14,12 @@ import { Select, SelectItem } from '@nextui-org/select'
 import { isEmptyOrWhitespace } from '@/utils/is-empty-or-whitespace'
 import toast from 'react-hot-toast'
 import { removeWhitespace } from '@/utils/remove-whitespace'
+import { currencies } from '@/constants/currencies'
 
 interface BudgetModalProps {
   modalOpened: boolean
   setModalOpened: (value: boolean) => void
-  setIncome: (value: any) => void
+  setRows: (value: any) => void
 }
 
 enum Category {
@@ -36,11 +37,12 @@ const categories = Array.from(Object.values(Category))
 const BudgetModal: React.FC<BudgetModalProps> = ({
   modalOpened,
   setModalOpened,
-  setIncome
+  setRows
 }) => {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState('0.00')
   const [category, setCategory] = useState<Category>(Category.Salary)
+  const [currency, setCurrency] = useState<string>('US Dollar')
 
   const handleCreateNewRow = () => {
     if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(amount)) {
@@ -48,9 +50,14 @@ const BudgetModal: React.FC<BudgetModalProps> = ({
       return
     }
 
-    setIncome((rows: { name: string; amount: number; category: Category }[]) => [
+    setRows((rows: { name: string; amount: number; category: Category }[]) => [
       ...rows,
-      { name, amount, category }
+      {
+        name,
+        amount,
+        category,
+        currency: currencies.find((c) => c.name === currency)?.symbol
+      }
     ])
 
     console.log([name, amount, category])
@@ -74,19 +81,37 @@ const BudgetModal: React.FC<BudgetModalProps> = ({
               variant="bordered"
               onChange={(e) => setName(e.target.value)}
             />
-            <Input
-              type="number"
-              value={amount}
-              placeholder="0.00"
-              label="Amount"
-              variant="bordered"
-              onChange={(e) => setAmount(e.target.value)}
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-small">$</span>
-                </div>
-              }
-            />
+            <div className="flex gap-1">
+              <Input
+                type="number"
+                value={amount}
+                placeholder="0.00"
+                label="Amount"
+                variant="bordered"
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-1/2"
+                startContent={
+                  <div className="pointer-events-none flex items-center">
+                    <span className="text-default-400 text-small">$</span>
+                  </div>
+                }
+              />
+              <Select
+                value={currency}
+                aria-label="Select a currency"
+                variant="bordered"
+                label="Currency"
+                placeholder="Select a currency"
+                className="w-1/2"
+                onChange={(e) => setCurrency(e.target.value)}
+              >
+                {currencies.map((currency) => (
+                  <SelectItem key={currency.name}>
+                    {currency.name + ' ' + currency.symbol}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
 
             <Select
               value={category}
@@ -99,9 +124,7 @@ const BudgetModal: React.FC<BudgetModalProps> = ({
               }
             >
               {categories.map((category) => (
-                <SelectItem key={category} value={'this is a value'}>
-                  {category}
-                </SelectItem>
+                <SelectItem key={category}>{category}</SelectItem>
               ))}
             </Select>
           </ModalBody>

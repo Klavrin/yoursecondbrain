@@ -8,6 +8,7 @@ import {
 } from '@nextui-org/table'
 import BudgetModal from './budget-modal'
 import { useState } from 'react'
+import CloseButton from './close-button'
 
 interface BudgetTableProps {
   title: string
@@ -16,7 +17,7 @@ interface BudgetTableProps {
 }
 
 const BudgetTable: React.FC<BudgetTableProps> = ({ title }) => {
-  const [income, setIncome] = useState<any>([])
+  const [rows, setRows] = useState<any>([])
   const [modalOpened, setModalOpened] = useState(false)
 
   return (
@@ -27,17 +28,25 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title }) => {
           <TableColumn>Name</TableColumn>
           <TableColumn>Amount</TableColumn>
           <TableColumn>Category</TableColumn>
+          <TableColumn> </TableColumn>
         </TableHeader>
         <TableBody>
-          {income.map((row: any) => (
+          {rows.map((row: any) => (
             <TableRow key={row.name}>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.amount}</TableCell>
+              <TableCell>
+                {row.currency}
+                {row.amount}
+              </TableCell>
               <TableCell>{row.category}</TableCell>
+              <TableCell className="flex justify-end p-0">
+                <CloseButton />
+              </TableCell>
             </TableRow>
           ))}
           <TableRow className="hover:bg-neutral-100" onClick={() => setModalOpened(true)}>
             <TableCell className="rounded-tl-md rounded-bl-md">+ New</TableCell>
+            <TableCell> </TableCell>
             <TableCell> </TableCell>
             <TableCell className="rounded-tr-md rounded-br-md"> </TableCell>
           </TableRow>
@@ -47,7 +56,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title }) => {
       <BudgetModal
         modalOpened={modalOpened}
         setModalOpened={setModalOpened}
-        setIncome={setIncome}
+        setRows={setRows}
       />
     </div>
   )

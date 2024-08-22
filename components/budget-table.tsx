@@ -50,9 +50,13 @@ const BudgetTable: React.FC<BudgetTableProps> = ({ title, type }) => {
   }, [])
 
   const handleDeleteRow = async (id: string) => {
-    const { error } = await supabase.from('budget').delete().eq('id', id)
-    if (error) throw error
-    setRows(rows.filter((row: Row) => row.id !== id))
+    try {
+      const { error } = await supabase.from('budget').delete().eq('id', id)
+      if (error) throw error
+      setRows(rows.filter((row: Row) => row.id !== id))
+    } catch (error) {
+      console.error('Error deleting row:', error)
+    }
   }
 
   return (

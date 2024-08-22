@@ -50,29 +50,33 @@ const BudgetModal: React.FC<BudgetModalProps> = ({
   const [currency, setCurrency] = useState<string>('US Dollar')
 
   const handleCreateNewRow = async () => {
-    if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(amount)) {
-      toast.error('Please enter a name and an amount.')
-      return
+    try {
+      if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(amount)) {
+        toast.error('Please enter a name and an amount.')
+        return
+      }
+
+      const { error, data } = await supabase
+        .from('budget')
+        .insert({
+          name,
+          amount,
+          category,
+          currency: currencies.find((c) => c.name === currency)?.symbol,
+          type
+        })
+        .select('*')
+
+      if (error) throw error
+      setRows((rows: Row[]) => [...rows, data[0]])
+
+      setName('')
+      setAmount('')
+      setCategory(Category.Salary)
+      setModalOpened(false)
+    } catch (error) {
+      console.log('Error creating new row:', error)
     }
-
-    const { error, data } = await supabase
-      .from('budget')
-      .insert({
-        name,
-        amount,
-        category,
-        currency: currencies.find((c) => c.name === currency)?.symbol,
-        type
-      })
-      .select('*')
-
-    if (error) throw error
-    setRows((rows: Row[]) => [...rows, data[0]])
-
-    setName('')
-    setAmount('')
-    setCategory(Category.Salary)
-    setModalOpened(false)
   }
 
   return (

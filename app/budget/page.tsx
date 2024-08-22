@@ -7,6 +7,8 @@ import BudgetModal from '@/components/budget-modal'
 import BudgetTable from '@/components/budget-table'
 
 const Budget = () => {
+  const [loading, setLoading] = useState(true)
+
   return (
     <div className="flex">
       <Sidebar />

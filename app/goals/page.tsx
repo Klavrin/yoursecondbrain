@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
 import GoalBlock from '@/components/goal-block'
+import GoalGroup from '@/components/goal-group'
 
 const data = [
   {
@@ -37,22 +38,7 @@ const Goals = () => {
         <Header withFeedOptions goalsFeedOptions />
         <div className="flex flex-col items-center max-w-[1028px] mx-auto px-2 mt-4">
           <div className="w-full grid grid-cols-3 gap-2">
-            {data.map((item) => (
-              <div className={twMerge('p-2', item.color)}>
-                <div
-                  className={twMerge(
-                    'flex items-center gap-1 px-2 rounded-xl w-min mb-2',
-                    item.titleContainerColor
-                  )}
-                >
-                  <div className={twMerge('w-2 h-2 rounded-full', item.circleColor)} />
-                  <h2 className={twMerge('text-sm whitespace-nowrap', item.titleColor)}>
-                    {item.title}
-                  </h2>
-                </div>
-                <GoalBlock />
-              </div>
-            ))}
+            <GoalGroup data={data} />
           </div>
         </div>
       </div>

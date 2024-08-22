@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import CloseButton from './close-button'
 import { twMerge } from 'tailwind-merge'
-const GoalBlock = () => {
+
+interface GoalBlockProps {
+  children: React.ReactNode
+}
+const GoalBlock: React.FC<GoalBlockProps> = ({ children }) => {
   const [showCloseButton, setShowCloseButton] = useState(false)
 
   return (
@@ -10,7 +14,7 @@ const GoalBlock = () => {
       onMouseOver={() => setShowCloseButton(true)}
       onMouseLeave={() => setShowCloseButton(false)}
     >
-      <div className="p-1">hello world</div>
+      <div className="p-1">{children}</div>
       <CloseButton className={twMerge(showCloseButton ? 'block' : 'hidden')} />
     </div>
   )

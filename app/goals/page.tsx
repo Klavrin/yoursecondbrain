@@ -1,8 +1,9 @@
 'use client'
+import { twMerge } from 'tailwind-merge'
 
 import Header from '@/components/header'
 import Sidebar from '@/components/sidebar'
-import { twMerge } from 'tailwind-merge'
+import GoalBlock from '@/components/goal-block'
 
 const data = [
   {
@@ -40,15 +41,16 @@ const Goals = () => {
               <div className={twMerge('p-2', item.color)}>
                 <div
                   className={twMerge(
-                    'flex items-center gap-1 px-2  rounded-xl w-min',
+                    'flex items-center gap-1 px-2 rounded-xl w-min mb-2',
                     item.titleContainerColor
                   )}
                 >
                   <div className={twMerge('w-2 h-2 rounded-full', item.circleColor)} />
-                  <h2 className={twMerge('whitespace-nowrap', item.titleColor)}>
+                  <h2 className={twMerge('text-sm whitespace-nowrap', item.titleColor)}>
                     {item.title}
                   </h2>
                 </div>
+                <GoalBlock />
               </div>
             ))}
           </div>

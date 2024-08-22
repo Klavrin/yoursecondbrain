@@ -22,9 +22,13 @@ import { useRouter } from 'next/navigation'
 
 interface HeaderProps {
   withFeedOptions?: boolean
+  goalsFeedOptions?: boolean
 }
 
-const Header: React.FC<HeaderProps> = ({ withFeedOptions = true }) => {
+const Header: React.FC<HeaderProps> = ({
+  withFeedOptions = true,
+  goalsFeedOptions = false
+}) => {
   const sidebarOpened = useSidebarStore((state) => state.sidebarOpened)
   const setSidebarValue = useSidebarStore((state) => state.setSidebarValue)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
@@ -70,11 +74,24 @@ const Header: React.FC<HeaderProps> = ({ withFeedOptions = true }) => {
 
           {withFeedOptions && (
             <div className="flex flex-wrap gap-4">
-              <Tooltip content="Feed options" delay={400} closeDelay={200} showArrow>
-                <Tabs aria-label="Tabs radius">
-                  <Tab key="for-you" title="For you" />
-                  <Tab key="following" title="Following" />
-                </Tabs>
+              <Tooltip
+                content={!goalsFeedOptions ? 'Feed Options' : 'Goals Tabs'}
+                delay={400}
+                closeDelay={200}
+                showArrow
+              >
+                {!goalsFeedOptions ? (
+                  <Tabs aria-label="Tabs radius">
+                    <Tab key="for-you" title="For you" />
+                    <Tab key="following" title="Following" />
+                  </Tabs>
+                ) : (
+                  <Tabs aria-label="Tabs radius">
+                    <Tab key="status-view" title="Status View" />
+                    <Tab key="by-due-date" title="By Due Date" />
+                    <Tab key="all-goals" title="All Goals" />
+                  </Tabs>
+                )}
               </Tooltip>
             </div>
           )}

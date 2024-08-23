@@ -36,6 +36,7 @@ const GoalsModal: React.FC<GoalsModalProps> = ({
             <ModalHeader className="flex flex-col gap-1">Add a new goal</ModalHeader>
             <ModalBody>
               <Input
+                autoFocus
                 label="Goal title"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}

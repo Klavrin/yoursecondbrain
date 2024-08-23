@@ -48,7 +48,6 @@ const GoalGroup: React.FC<GoalGroupProps> = ({ data }) => {
             )}
             onClick={() => setModalOpened(true)}
           >
-            {' '}
             <GoPlus className={item.titleColor} size={20} />
             New
           </button>

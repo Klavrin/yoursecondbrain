@@ -1,9 +1,23 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import GoalBlock from './goal-block'
 import GoalsModal from './goals-modal'
 import { GoPlus } from 'react-icons/go'
+import {
+  useSensors,
+  useSensor,
+  PointerSensor,
+  KeyboardSensor,
+  DndContext,
+  closestCenter
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable'
 
 interface GoalGroupProps {
   data: {
@@ -18,6 +32,23 @@ interface GoalGroupProps {
 const GoalGroup: React.FC<GoalGroupProps> = ({ data }) => {
   const [blocks, setBlocks] = useState(['hello', 'world'])
   const [modalOpened, setModalOpened] = useState(false)
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  )
+
+  const onDragEnd = useCallback((event: any) => {
+    const { active, over } = event
+
+    if (active.id !== over.id) {
+      setBlocks((items) => {
+        const oldIndex = items.indexOf(active.id)
+        const newIndex = items.indexOf(over.id)
+
+        return arrayMove(items, oldIndex, newIndex)
+      })
+    }
+  }, [])
 
   return (
     <>
@@ -36,17 +67,27 @@ const GoalGroup: React.FC<GoalGroupProps> = ({ data }) => {
           </div>
 
           <div className="flex flex-col gap-1">
-            {blocks.map((block) => (
-              <GoalBlock>{block}</GoalBlock>
-            ))}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={onDragEnd}
+            >
+              <SortableContext items={blocks} strategy={verticalListSortingStrategy}>
+                {blocks.map((block) => (
+                  <GoalBlock key={block} id={block}>
+                    {block}
+                  </GoalBlock>
+                ))}
+              </SortableContext>
+            </DndContext>
           </div>
 
           <button
+            onClick={() => setModalOpened(true)}
             className={twMerge(
               `p-1.5 mt-2 rounded-lg flex items-center w-full hover:bg-gray-400/10 text-sm`,
               item.titleColor
             )}
-            onClick={() => setModalOpened(true)}
           >
             <GoPlus className={item.titleColor} size={20} />
             New

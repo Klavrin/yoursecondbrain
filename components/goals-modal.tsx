@@ -30,7 +30,6 @@ const GoalsModal: React.FC<GoalsModalProps> = ({
       const i = +index
       const newBlockItems = [...blockItems]
       newBlockItems[i].push({ id: uuid(), value: inputValue })
-      console.log('newBlockItems', newBlockItems)
       return newBlockItems
     })
     setInputValue('')

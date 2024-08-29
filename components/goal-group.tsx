@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { GoalBlockItem } from '@/app/goals/page'
+import type { setBlockItemsType } from '@/app/goals/page'
 
 import GoalBlock from './goal-block'
 import GoalsModal from './goals-modal'
@@ -18,7 +19,7 @@ interface GoalGroupProps {
   }
   index: number
   blockItems: GoalBlockItem[]
-  setBlockItems: (value: GoalBlockItem[]) => void
+  setBlockItems: setBlockItemsType
 }
 
 const GoalGroup: React.FC<GoalGroupProps> = ({
@@ -52,7 +53,13 @@ const GoalGroup: React.FC<GoalGroupProps> = ({
 
             <div className="flex flex-col gap-1">
               {blockItems[index].map((block, ind) => (
-                <GoalBlock key={block.id} id={block.id} index={ind}>
+                <GoalBlock
+                  key={block.id}
+                  id={block.id}
+                  groupIndex={index}
+                  index={ind}
+                  setBlockItems={setBlockItems}
+                >
                   {block.value}
                 </GoalBlock>
               ))}

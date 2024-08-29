@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Draggable } from 'react-beautiful-dnd'
+import { GoalBlockItem } from '@/app/goals/page'
+import type { setBlockItemsType } from '@/app/goals/page'
 
 import CloseButton from './close-button'
 import GoalDotsIcon from './goal-dots-icon'
@@ -8,11 +10,29 @@ import GoalDotsIcon from './goal-dots-icon'
 interface GoalBlockProps {
   children: React.ReactNode
   id: string
+  groupIndex: number
   index: number
+  setBlockItems: setBlockItemsType
 }
 
-const GoalBlock: React.FC<GoalBlockProps> = ({ children, id, index }) => {
+const GoalBlock: React.FC<GoalBlockProps> = ({
+  children,
+  id,
+  groupIndex,
+  index,
+  setBlockItems
+}) => {
   const [showButtons, setShowButtons] = useState(false)
+
+  const handleDeleteGoalBlock = () => {
+    setBlockItems((blockItems) => {
+      const newBlockItems = [...blockItems]
+      newBlockItems[groupIndex] = newBlockItems[groupIndex].filter(
+        (item: { id: string; value: string }) => item.id !== id
+      )
+      return newBlockItems
+    })
+  }
 
   return (
     <Draggable key={id} draggableId={id} index={index}>
@@ -28,7 +48,10 @@ const GoalBlock: React.FC<GoalBlockProps> = ({ children, id, index }) => {
           <div className="p-1">{children}</div>
           <div className="flex items-center">
             <GoalDotsIcon className={twMerge(showButtons ? 'block' : 'hidden')} />
-            <CloseButton className={twMerge(showButtons ? 'block' : 'hidden')} />
+            <CloseButton
+              className={twMerge(showButtons ? 'block' : 'hidden')}
+              onClick={handleDeleteGoalBlock}
+            />
           </div>
         </div>
       )}

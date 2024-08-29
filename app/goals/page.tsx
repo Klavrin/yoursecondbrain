@@ -11,6 +11,10 @@ export type GoalBlockItem = {
   value: string
 }[]
 
+export type setBlockItemsType = (
+  blockItems: GoalBlockItem[] | ((blockItems: GoalBlockItem[]) => void)
+) => void
+
 const data = [
   {
     id: '64ee9cd1-ce26-485e-be68-68e0e1c863fa',
@@ -112,7 +116,7 @@ const Goals = () => {
                   data={item}
                   index={index}
                   blockItems={blockItems}
-                  setBlockItems={setBlockItems}
+                  setBlockItems={setBlockItems as setBlockItemsType}
                 />
               ))}
             </DragDropContext>

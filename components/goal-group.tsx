@@ -51,13 +51,11 @@ const GoalGroup: React.FC<GoalGroupProps> = ({
             </div>
 
             <div className="flex flex-col gap-1">
-              {blockItems[index].length !== 0
-                ? blockItems[index].map((block, ind) => (
-                    <GoalBlock key={block} id={block} index={ind}>
-                      {block}
-                    </GoalBlock>
-                  ))
-                : null}
+              {blockItems[index].map((block, ind) => (
+                <GoalBlock key={block} id={block} index={ind}>
+                  {block}
+                </GoalBlock>
+              ))}
             </div>
 
             <button

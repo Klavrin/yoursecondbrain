@@ -94,7 +94,7 @@ const Goals = () => {
       newBlockItems[sourceIndex] = result[sourceIndex]
       newBlockItems[destinationIndex] = result[destinationIndex]
 
-      setBlockItems(newBlockItems.filter((group) => group.length))
+      setBlockItems(newBlockItems)
     }
   }
 

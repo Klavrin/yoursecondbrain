@@ -6,6 +6,11 @@ import GoalGroup from '@/components/goal-group'
 import { useState } from 'react'
 import { DragDropContext } from 'react-beautiful-dnd'
 
+export type GoalBlockItem = {
+  id: string
+  value: string
+}[]
+
 const data = [
   {
     id: '64ee9cd1-ce26-485e-be68-68e0e1c863fa',
@@ -33,7 +38,7 @@ const data = [
   }
 ]
 
-const reorder = (list: string[], startIndex: number, endIndex: number) => {
+const reorder = (list: GoalBlockItem, startIndex: number, endIndex: number) => {
   const [removed] = list.splice(startIndex, 1)
   list.splice(endIndex, 0, removed)
   return list
@@ -56,11 +61,7 @@ const move = (
 }
 
 const Goals = () => {
-  const [blockItems, setBlockItems] = useState<string[][]>([
-    ['1', '2'],
-    ['3', '4'],
-    ['5', '6']
-  ])
+  const [blockItems, setBlockItems] = useState<GoalBlockItem[]>([[], [], []])
 
   console.log(blockItems)
 
@@ -104,7 +105,7 @@ const Goals = () => {
       <div className="w-full">
         <Header withFeedOptions goalsFeedOptions />
         <div className="flex flex-col items-center max-w-[1028px] mx-auto px-2 mt-4">
-          <div className="w-full flex gap-2">
+          <div className="w-full flex gap-2 transition-all">
             <DragDropContext onDragEnd={onDragEnd}>
               {data.map((item, index) => (
                 <GoalGroup

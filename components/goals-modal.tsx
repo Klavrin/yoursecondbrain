@@ -8,22 +8,31 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/modal'
+import { uuid } from 'uuidv4'
 
 interface GoalsModalProps {
   modalOpened: boolean
   setModalOpened: (value: boolean) => void
-  setBlocks: (value: any) => void
+  setBlockItems: (value: any) => void
+  index: number
 }
 
 const GoalsModal: React.FC<GoalsModalProps> = ({
   modalOpened,
   setModalOpened,
-  setBlocks
+  setBlockItems,
+  index
 }) => {
   const [inputValue, setInputValue] = useState('')
 
   const handleAddBlock = () => {
-    setBlocks((blocks: any) => [...blocks, inputValue])
+    setBlockItems((blockItems: any) => {
+      const i = +index
+      const newBlockItems = [...blockItems]
+      newBlockItems[i].push({ id: uuid(), value: inputValue })
+      console.log('newBlockItems', newBlockItems)
+      return newBlockItems
+    })
     setInputValue('')
     setModalOpened(false)
   }

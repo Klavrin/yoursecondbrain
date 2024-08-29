@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import {
@@ -9,6 +9,7 @@ import {
   ModalHeader
 } from '@nextui-org/modal'
 import { uuid } from 'uuidv4'
+import { PressEvent } from '@react-types/shared'
 
 interface GoalsModalProps {
   modalOpened: boolean
@@ -25,7 +26,11 @@ const GoalsModal: React.FC<GoalsModalProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState('')
 
-  const handleAddBlock = () => {
+  const handleAddBlock = (e: FormEvent | PressEvent) => {
+    if (e.type === 'submit') {
+      e.preventDefault()
+    }
+
     setBlockItems((blockItems: any) => {
       const i = +index
       const newBlockItems = [...blockItems]
@@ -40,7 +45,7 @@ const GoalsModal: React.FC<GoalsModalProps> = ({
     <Modal isOpen={modalOpened} onOpenChange={() => setModalOpened(false)}>
       <ModalContent>
         {(onClose) => (
-          <>
+          <form onSubmit={handleAddBlock}>
             <ModalHeader className="flex flex-col gap-1">Add a new goal</ModalHeader>
             <ModalBody>
               <Input
@@ -58,7 +63,7 @@ const GoalsModal: React.FC<GoalsModalProps> = ({
                 Add
               </Button>
             </ModalFooter>
-          </>
+          </form>
         )}
       </ModalContent>
     </Modal>

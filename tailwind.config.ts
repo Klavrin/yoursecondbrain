@@ -12,6 +12,6 @@ module.exports = {
       colors: {}
     }
   },
-  darkMode: 'class',
+  darkMode: ['selector', '[data-mode="dark"]'],
   plugins: [nextui()]
 }

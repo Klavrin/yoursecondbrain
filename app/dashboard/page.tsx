@@ -15,18 +15,24 @@ import { useUser } from '@/provider/user-provider'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { useEffect, useState } from 'react'
+import { useThemeStore } from '@/store/theme-store'
+import { twMerge } from 'tailwind-merge'
 
 import Sidebar from '@/components/sidebar'
 import Header from '@/components/header'
 import Loading from '@/components/loading'
+import { Button } from '@nextui-org/button'
 
 const Dashboard = () => {
   const [tasksDueToday, setTasksDueToday] = useState([])
   const [loading, setLoading] = useState(true)
   const { user } = useUser()
   const supabase = createClient()
+  const { theme, toggleTheme } = useThemeStore((state) => state)
 
   if (!user) redirect('/landing')
+
+  console.log(theme)
 
   useEffect(() => {
     const getTasksDueToday = async () => {
@@ -47,7 +53,7 @@ const Dashboard = () => {
   if (loading) return <Loading />
 
   return (
-    <div className="flex">
+    <div className={twMerge('flex', theme === 'dark' && 'bg-stone-800')}>
       <Sidebar />
       <div className="w-full">
         <Header withFeedOptions={false} />
@@ -72,7 +78,6 @@ const Dashboard = () => {
               <p className="text-base text-neutral-400">Goals achieved</p>
             </Card>
           </div>
-
           <div className="w-full mt-8">
             <div className="flex items-center gap-1 text-neutral-400 mb-2 pl-2">
               <IoCheckbox />
@@ -98,6 +103,8 @@ const Dashboard = () => {
               </TableBody>
             </Table>
           </div>
+
+          <Button onClick={() => toggleTheme()}>Dark mode</Button>
         </div>
       </div>
     </div>
